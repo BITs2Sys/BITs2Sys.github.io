@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Awards and competition records of BITs2Sys CTF team." />
+  <title>Awards - BITs2Sys</title>
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="favicon32.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <style>
+    :root {
+      --paper: #fbfcff;
+      --ink: #111827;
+      --muted: #64748b;
+      --line: #d9e2f2;
+      --blue: #2563ff;
+      --blue-dark: #1738bd;
+      --blue-soft: #e8efff;
+      --red: #ff315d;
+      --red-dark: #b9183c;
+      --red-soft: #ffe5ec;
+      --white: #ffffff;
+      --shadow: 0 18px 45px rgba(17, 24, 39, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--paper);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        repeating-linear-gradient(90deg, rgba(37, 99, 255, 0.06) 0 1px, transparent 1px 86px),
+        repeating-linear-gradient(0deg, rgba(255, 49, 93, 0.045) 0 1px, transparent 1px 86px),
+        var(--paper);
+    }
+
+    #signal-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 42px 24px 76px;
+    }
+
+    .back-link {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 34px;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 4px 4px 0 var(--ink);
+      color: var(--ink);
+      font-size: 1.25rem;
+      font-weight: 900;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .back-link:hover,
+    .back-link:focus-visible {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--ink);
+      outline: none;
+    }
+
+    .page-title {
+      margin: 0 0 36px;
+      color: var(--ink);
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      line-height: 1;
+      font-weight: 950;
+      text-align: center;
+      text-shadow: 5px 5px 0 rgba(255, 49, 93, 0.12);
+    }
+
+    .awards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .award {
+      position: relative;
+      display: grid;
+      grid-template-columns: 206px minmax(0, 1fr);
+      gap: 28px;
+      padding: 22px 24px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .award::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 4px;
+      background: var(--blue);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 180ms ease;
+    }
+
+    .award.gold::before {
+      background: var(--red);
+    }
+
+    .award:hover {
+      transform: translateX(3px);
+      border-color: var(--blue);
+    }
+
+    .award.gold:hover {
+      border-color: var(--red);
+    }
+
+    .award:hover::before {
+      transform: scaleY(1);
+    }
+
+    .award__meta {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 7px;
+      padding-right: 24px;
+      border-right: 1px solid var(--line);
+    }
+
+    .award__date {
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 850;
+      letter-spacing: 0;
+      line-height: 1.4;
+    }
+
+    .award__rank {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      color: var(--blue);
+      font-size: 1.7rem;
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .gold .award__rank {
+      color: var(--red);
+    }
+
+    .award__rank .hash {
+      color: var(--muted);
+      font-size: 0.72em;
+      font-weight: 900;
+    }
+
+    .award__prize {
+      width: fit-content;
+      max-width: 100%;
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: var(--red-soft);
+      color: var(--red-dark);
+      font-size: 0.7rem;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .award__body {
+      min-width: 0;
+    }
+
+    .award__name {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 1.12rem;
+      line-height: 1.35;
+      font-weight: 950;
+      overflow-wrap: anywhere;
+    }
+
+    .award__team {
+      display: inline-flex;
+      margin-bottom: 8px;
+      padding: 3px 10px;
+      border-radius: 5px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 0.76rem;
+      font-weight: 950;
+    }
+
+    .award__roster,
+    .award__tiers {
+      color: #334155;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      font-weight: 560;
+    }
+
+    .sep {
+      color: var(--muted);
+      margin: 0 7px;
+    }
+
+    .award__tiers {
+      display: grid;
+      gap: 4px;
+    }
+
+    .tier {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+    }
+
+    .lvl {
+      min-width: 64px;
+      color: var(--red-dark);
+      font-size: 0.74rem;
+      font-weight: 950;
+    }
+
+    .tier:nth-child(2) .lvl {
+      color: var(--blue-dark);
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 32px 18px 56px;
+      }
+
+      .award {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 20px;
+      }
+
+      .award__meta {
+        padding-right: 0;
+        padding-bottom: 14px;
+        border-right: 0;
+        border-bottom: 1px dashed var(--line);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .award__meta {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="signal-canvas" aria-hidden="true"></canvas>
+
+  <main class="page">
+    <a class="back-link" href="index.html" aria-label="Back to home">←</a>
+
+    <h1 class="page-title">Awards</h1>
+
+    <section class="awards-list" aria-label="Awards list">
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2026.04.28 CST</div><div class="award__prize">三等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第三届“长城杯”网数智安全大赛(防护赛) · 总决赛</h2><span class="award__team">BITs2Sys</span><div class="award__roster">马艺华<span class="sep">·</span>杨姚<span class="sep">·</span>郭峻齐<span class="sep">·</span>董育嘉</div></div>
+      </article>
+	  
+	  <article class="award gold">
+        <div class="award__meta"><div class="award__date">2026.04.28 CST</div><div class="award__prize">三等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第三届“长城杯”网数智安全大赛(防护赛) · 总决赛</h2><span class="award__team">BITs2Net</span><div class="award__roster">刘泓渊<span class="sep">·</span>赵炜桦<span class="sep">·</span>何定辉<span class="sep">·</span>钟羽辰</div></div>
+      </article>
+	  
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2026.04.19 CST</div><div class="award__rank"><span class="hash">#</span>1</div><div class="award__prize">一等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第九届中国高校智能机器人创意大赛产教融合赛道 · 软件系统安全赛 · 华北区域现场赛</h2><span class="award__team">北京理工大学 2 队</span><div class="award__roster">马艺华<span class="sep">·</span>郭峻齐<span class="sep">·</span>赵炜桦<span class="sep">·</span>董育嘉</div></div>
+      </article>
+	  
+	  <article class="award gold">
+        <div class="award__meta"><div class="award__date">2026.04.19 CST</div><div class="award__rank"><span class="hash">#</span>60</div><div class="award__prize">二等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第九届中国高校智能机器人创意大赛产教融合赛道 · 软件系统安全赛 · 华北区域现场赛</h2><span class="award__team">北京理工大学 3 队</span><div class="award__roster">刘泓渊<span class="sep">·</span>张诺<span class="sep">·</span>钟羽辰<span class="sep">·</span>何定辉</div></div>
+      </article>
+
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2026.03.21 CST</div><div class="award__rank"><span class="hash">#</span>20</div><div class="award__prize">一等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第十九届全国大学生信息安全竞赛(创新实践能力赛) · 暨第三届“长城杯”网数智安全大赛(防护赛) ·半决赛</h2><span class="award__team">BITs2Sys</span><div class="award__roster">马艺华<span class="sep">·</span>杨姚<span class="sep">·</span>郭峻齐<span class="sep">·</span>董育嘉</div></div>
+      </article>
+
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2026.03.21 CST</div><div class="award__rank"><span class="hash">#</span>23</div><div class="award__prize">一等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第十九届全国大学生信息安全竞赛(创新实践能力赛) · 暨第三届“长城杯”网数智安全大赛(防护赛) ·半决赛</h2><span class="award__team">BITs2Net</span><div class="award__roster">刘泓渊<span class="sep">·</span>赵炜桦<span class="sep">·</span>何定辉<span class="sep">·</span>钟羽辰</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2026.02.01 CST</div><div class="award__rank"><span class="hash">#</span>16</div></div>
+        <div class="award__body"><h2 class="award__name">AliCTF</h2><span class="award__team">BITs2Sys</span><div class="award__roster">张诺<span class="sep">·</span>马艺华<span class="sep">·</span>杨姚<span class="sep">·</span>刘泓渊<span class="sep">·</span>何定辉<span class="sep">·</span>董育嘉<span class="sep">·</span>郭峻齐<span class="sep">·</span>赵炜桦</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2025.11.09 CST</div><div class="award__rank"><span class="hash">#</span>13</div></div>
+        <div class="award__body"><h2 class="award__name">第九届“强网杯”全国网络安全挑战赛 · 行业领域专项赛 · 车联网安全</h2><span class="award__team">BITs2Vehicle</span><div class="award__roster">杨姚<span class="sep">·</span>张诺<span class="sep">·</span>马艺华<span class="sep">·</span>王帅朝<span class="sep">·</span>陈芷漫<span class="sep">·</span>陈致远<span class="sep">·</span>钟羽辰<span class="sep">·</span>董育嘉<span class="sep">·</span>郭峻齐</div></div>
+      </article>
+
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2025.10.19 CST</div><div class="award__rank"><span class="hash">#</span>1</div><div class="award__prize">一等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第22届全国大学生信息安全与对抗技术竞赛（ISCC）博弈对抗赛</h2><span class="award__team">BITs2Sys</span><div class="award__roster">马艺华<span class="sep">·</span>杨姚<span class="sep">·</span>王帅朝</div></div>
+      </article>
+
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2025.10.18 - 10.19 CST</div><div class="award__rank"><span class="hash">#</span>33</div><div class="award__prize">强网先锋</div></div>
+        <div class="award__body"><h2 class="award__name">第九届“强网杯”全国网络安全挑战赛 · 线上赛</h2><span class="award__team">BITs2Sys</span></div>
+      </article>
+
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2024.08.11 - 08.14 CST</div><div class="award__prize">三等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第十七届全国大学生信息安全竞赛 · 作品赛</h2><span class="award__team">BITs2Sys</span><div class="award__roster">钟羽辰<span class="sep">·</span>白朕铭</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2024.07.13 - 07.14 CST</div><div class="award__rank"><span class="hash">#</span>12</div></div>
+        <div class="award__body"><h2 class="award__name">OSCTF</h2><span class="award__team">BIT</span><div class="award__roster">ALL</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2024.06.25 CST</div><div class="award__rank"><span class="hash">#</span>28</div><div class="award__prize">二等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第十七届全国大学生信息安全竞赛 · 创新实践能力赛 · 半决赛</h2><span class="award__team">BITs2Net</span><div class="award__roster">胡晋诚<span class="sep">·</span>马艺华<span class="sep">·</span>秦璟琪<span class="sep">·</span>严小桐</div></div>
+      </article>
+
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2024.06.25 CST</div><div class="award__rank"><span class="hash">#</span>13</div><div class="award__prize">二等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第十七届全国大学生信息安全竞赛 · 创新实践能力赛 · 半决赛</h2><span class="award__team">BITs2Sys</span><div class="award__roster">张诺<span class="sep">·</span>庞杨<span class="sep">·</span>胡邦睿<span class="sep">·</span>钟羽辰</div></div>
+      </article>
+
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2024.04.21 CST</div><div class="award__rank"><span class="hash">#</span>30</div><div class="award__prize">三等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第一届“长城杯”信息安全铁人三项赛 · 半决赛</h2><span class="award__team">北京理工大学网络空间安全学院 1 队</span><div class="award__roster">张诺<span class="sep">·</span>庞杨<span class="sep">·</span>胡晋诚<span class="sep">·</span>张岩</div></div>
+      </article>
+
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2024.03.31 CST</div><div class="award__rank"><span class="hash">#</span>44</div><div class="award__prize">一等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第一届“长城杯”信息安全铁人三项赛 · 初赛</h2><span class="award__team">北京理工大学网络空间安全学院 1 队</span><div class="award__roster">张诺<span class="sep">·</span>庞杨<span class="sep">·</span>胡晋诚<span class="sep">·</span>张岩</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2024.03.31 CST</div><div class="award__rank"><span class="hash">#</span>90</div><div class="award__prize">二等奖</div></div>
+        <div class="award__body"><h2 class="award__name">第一届“长城杯”信息安全铁人三项赛 · 初赛</h2><span class="award__team">北京理工大学网络空间安全学院 2 队</span><div class="award__roster">陈致远<span class="sep">·</span>钟羽辰<span class="sep">·</span>甘霖<span class="sep">·</span>郑昌乾</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2024.04.06 - 04.08 UTC</div><div class="award__rank"><span class="hash">#</span>51</div></div>
+        <div class="award__body"><h2 class="award__name">DamCTF 2024</h2><span class="award__team">BIT</span><div class="award__roster">zinc_96<span class="sep">·</span>Y4ng<span class="sep">·</span>Chrans<span class="sep">·</span>l1fe<span class="sep">·</span>Y4n_re</div></div>
+      </article>
+
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2024.03.09 - 03.10 UTC</div><div class="award__rank"><span class="hash">#</span>9</div></div>
+        <div class="award__body"><h2 class="award__name">WxMCTF 2024</h2><span class="award__team">BIT</span><div class="award__roster">zinc_96<span class="sep">·</span>Y4ng<span class="sep">·</span>Chrans<span class="sep">·</span>l1fe</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2024.02.24 - 02.26 UTC</div><div class="award__rank"><span class="hash">#</span>54</div></div>
+        <div class="award__body"><h2 class="award__name">bi0sCTF 2024</h2><span class="award__team">BIT</span><div class="award__roster">l1fe<span class="sep">·</span>hammer</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2024.02.03 - 02.05 UTC</div><div class="award__rank"><span class="hash">#</span>54</div></div>
+        <div class="award__body"><h2 class="award__name">L3HCTF 2024</h2><span class="award__team">BITs2Sys</span><div class="award__roster">zinc_96<span class="sep">·</span>Y4ng<span class="sep">·</span>hjcccxh<span class="sep">·</span>l1fe<span class="sep">·</span>Y4n_re<span class="sep">·</span>Nene</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2024.01.27 - 01.28 CST</div><div class="award__rank"><span class="hash">#</span>65</div><div class="award__prize">高校赛道</div></div>
+        <div class="award__body"><h2 class="award__name">Real World CTF 2024 · 体验赛</h2><span class="award__team">BITs2Sys</span><div class="award__roster">zinc_96</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2024.01.20 - 01.21 UTC</div><div class="award__rank"><span class="hash">#</span>44</div></div>
+        <div class="award__body"><h2 class="award__name">Mapna CTF 2024</h2><span class="award__team">BIT</span><div class="award__roster">zinc_96<span class="sep">·</span>Y4ng<span class="sep">·</span>Y4n_re<span class="sep">·</span>MYBJ<span class="sep">·</span>l1fe<span class="sep">·</span>Aono<span class="sep">·</span>yueguangbuwenrou<span class="sep">·</span>M4x<span class="sep">·</span>everything11<span class="sep">·</span>QYY542<span class="sep">·</span>Lucien</div></div>
+      </article>
+
+      <article class="award gold">
+        <div class="award__meta"><div class="award__date">2023.10.25 - 10.26 UTC</div><div class="award__rank"><span class="hash">#</span>10</div></div>
+        <div class="award__body"><h2 class="award__name">3rd Stage MetaRed CTF Argentina | CERTUNLP 2023</h2><span class="award__team">BIT</span><div class="award__roster">zinc_96<span class="sep">·</span>Y4ng<span class="sep">·</span>Antheham<span class="sep">·</span>SHIYE<span class="sep">·</span>innovation<span class="sep">·</span>autorx3</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2023.10.21 - 10.23 UTC</div><div class="award__rank"><span class="hash">#</span>59</div></div>
+        <div class="award__body"><h2 class="award__name">N1CTF 2023</h2><span class="award__team">BIT</span><div class="award__roster">zinc_96<span class="sep">·</span>Y4ng</div></div>
+      </article>
+
+      <article class="award">
+        <div class="award__meta"><div class="award__date">2023.10.11 CST</div><div class="award__prize">优秀奖</div></div>
+        <div class="award__body"><h2 class="award__name">2023 网信柏鹭杯</h2><span class="award__team">BIT</span><div class="award__roster">张诺<span class="sep">·</span>庞杨<span class="sep">·</span>潘思成</div></div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById("signal-canvas");
+      const ctx = canvas.getContext("2d");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const colors = ["#2563ff", "#ff315d", "#111827"];
+      const pointer = { x: -9999, y: -9999 };
+      let width = 0;
+      let height = 0;
+      let nodes = [];
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const count = Math.max(36, Math.floor((width * height) / 22000));
+        nodes = Array.from({ length: count }, (_, index) => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.34,
+          vy: (Math.random() - 0.5) * 0.34,
+          size: index % 7 === 0 ? 3.4 : 2.2,
+          color: colors[index % colors.length]
+        }));
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "rgba(251, 252, 255, 0.72)";
+        ctx.fillRect(0, 0, width, height);
+
+        for (let i = 0; i < nodes.length; i += 1) {
+          const a = nodes[i];
+          if (!reduceMotion) {
+            const dx = a.x - pointer.x;
+            const dy = a.y - pointer.y;
+            const distance = Math.hypot(dx, dy);
+            if (distance < 160) {
+              a.vx += dx / 18000;
+              a.vy += dy / 18000;
+            }
+            a.x += a.vx;
+            a.y += a.vy;
+            if (a.x < -20) a.x = width + 20;
+            if (a.x > width + 20) a.x = -20;
+            if (a.y < -20) a.y = height + 20;
+            if (a.y > height + 20) a.y = -20;
+          }
+
+          for (let j = i + 1; j < nodes.length; j += 1) {
+            const b = nodes[j];
+            const d = Math.hypot(a.x - b.x, a.y - b.y);
+            if (d < 132) {
+              ctx.globalAlpha = (1 - d / 132) * 0.45;
+              ctx.strokeStyle = i % 2 === 0 ? "#2563ff" : "#ff315d";
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+
+          ctx.globalAlpha = 0.9;
+          ctx.fillStyle = a.color;
+          ctx.fillRect(a.x - a.size / 2, a.y - a.size / 2, a.size, a.size);
+        }
+
+        ctx.globalAlpha = 1;
+        if (!reduceMotion) requestAnimationFrame(draw);
+      }
+
+      window.addEventListener("resize", resize);
+      window.addEventListener("pointermove", (event) => {
+        pointer.x = event.clientX;
+        pointer.y = event.clientY;
+      });
+      window.addEventListener("pointerleave", () => {
+        pointer.x = -9999;
+        pointer.y = -9999;
+      });
+      resize();
+      draw();
+    })();
+  </script>
+</body>
+</html>

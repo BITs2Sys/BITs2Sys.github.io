@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Vulnerabilities reported by BITs2Sys." />
+  <title>Vulnerabilities - BITs2Sys</title>
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="favicon32.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <style>
+    :root {
+      --paper: #fbfcff;
+      --ink: #111827;
+      --muted: #64748b;
+      --line: #d9e2f2;
+      --blue: #2563ff;
+      --blue-dark: #1738bd;
+      --red: #ff315d;
+      --white: #ffffff;
+      --shadow: 0 18px 45px rgba(17, 24, 39, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--paper);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        repeating-linear-gradient(90deg, rgba(37, 99, 255, 0.06) 0 1px, transparent 1px 86px),
+        repeating-linear-gradient(0deg, rgba(255, 49, 93, 0.045) 0 1px, transparent 1px 86px),
+        var(--paper);
+    }
+
+    #signal-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 42px 24px 76px;
+    }
+
+    .back-link {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 34px;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 4px 4px 0 var(--ink);
+      color: var(--ink);
+      font-size: 1.25rem;
+      font-weight: 900;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .back-link:hover,
+    .back-link:focus-visible {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--ink);
+      outline: none;
+    }
+
+    .page-title {
+      margin: 0 0 36px;
+      color: var(--ink);
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      line-height: 1;
+      font-weight: 950;
+      text-align: center;
+      text-shadow: 5px 5px 0 rgba(255, 49, 93, 0.12);
+    }
+
+    .vuln-sections {
+      display: grid;
+      gap: 44px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      line-height: 1.1;
+      font-weight: 950;
+    }
+
+    .section-count {
+      min-width: 34px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: rgba(255, 49, 93, 0.12);
+      color: #b9183c;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 950;
+    }
+
+    .vuln-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 16px;
+    }
+
+    .vuln-card {
+      --score: 0;
+      --sat: 30%;
+      --tone: hsl(218 100% var(--sat));
+      --tone-soft: hsl(218 100% 97%);
+      min-height: 248px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 22px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, var(--tone-soft), rgba(255, 255, 255, 0.94) 48%),
+        rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .vuln-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 5px;
+      background: var(--tone);
+    }
+
+    .vuln-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--tone);
+    }
+
+    .vuln-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .vuln-id {
+      min-width: 0;
+    }
+
+    .vuln-code {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1.08rem;
+      line-height: 1.25;
+      font-weight: 950;
+      overflow-wrap: anywhere;
+    }
+
+    .vuln-src {
+      width: fit-content;
+      max-width: 100%;
+      display: inline-flex;
+      margin-top: 8px;
+      padding: 3px 9px;
+      border-radius: 5px;
+      background: rgba(37, 99, 255, 0.12);
+      color: var(--blue-dark);
+      font-size: 0.72rem;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .score {
+      flex: 0 0 auto;
+      min-width: 64px;
+      padding: 7px 8px;
+      border-radius: 8px;
+      background: var(--tone);
+      color: var(--white);
+      text-align: center;
+      font-size: 1.2rem;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .score span {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.62rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .vuln-desc {
+      margin: 0;
+      color: #334155;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      font-weight: 560;
+    }
+
+    .vuln-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 20px;
+    }
+
+    .vuln-meta span {
+      display: inline-flex;
+      min-height: 25px;
+      align-items: center;
+      padding: 0 9px;
+      border-radius: 5px;
+      background: rgba(255, 49, 93, 0.1);
+      color: #b9183c;
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    .vuln-meta .reporter {
+      background: rgba(37, 99, 255, 0.1);
+      color: var(--blue-dark);
+    }
+
+    .empty-note {
+      margin: 0 auto;
+      max-width: 640px;
+      grid-column: 1 / -1;
+      padding: 22px;
+      border: 2px dashed var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.8;
+      font-weight: 700;
+    }
+
+    @media (max-width: 680px) {
+      .page {
+        padding: 32px 18px 56px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="signal-canvas" aria-hidden="true"></canvas>
+
+  <main class="page">
+    <a class="back-link" href="index.html" aria-label="Back to home">←</a>
+    <h1 class="page-title">Vulnerabilities</h1>
+    <div class="vuln-sections">
+      <section class="vuln-section" aria-labelledby="numbered-vuln-title">
+        <div class="section-heading">
+          <h2 id="numbered-vuln-title">漏洞编号</h2>
+          <span class="section-count" id="numbered-vuln-count">0</span>
+        </div>
+        <div class="vuln-grid" id="numbered-vuln-grid" aria-label="Numbered vulnerability list"></div>
+      </section>
+
+      <section class="vuln-section" aria-labelledby="src-vuln-title">
+        <div class="section-heading">
+          <h2 id="src-vuln-title">SRC</h2>
+          <span class="section-count" id="src-vuln-count">0</span>
+        </div>
+        <div class="vuln-grid" id="src-vuln-grid" aria-label="SRC vulnerability list"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const numberedVulnerabilities = [
+      {
+        code: "NCC-2026-04757",
+        score: 6.9,
+        type: "拒绝服务",
+        reporter: "1diot9",
+        summary: "浙江大华技术股份有限公司大华ICC智能物联综合管理平台存在拒绝服务漏洞"
+      },
+      {
+        code: "NCC-2026-04815",
+        score: 6.9,
+        type: "信息泄露",
+        reporter: "1diot9",
+        summary: "大华ICC智能物联综合管理平台存在敏感信息泄露"
+      },
+      {
+        code: "NCC-2025-01027",
+        score: 5.6,
+        type: "任意文件读取",
+        reporter: "1diot9",
+        summary: "用友U8cloud 5.1版本NCCloudGatewayServlet补丁绕过实现任意文件读取"
+      },
+      {
+        code: "NCC-2025-01268",
+        score: 5.6,
+        type: "反序列化",
+        reporter: "1diot9",
+        summary: "NCCloudGatewayServlet接口补丁绕过实现反序列化"
+      },
+      {
+        code: "NCC-2025-01029",
+        score: 5.6,
+        type: "SQL注入",
+        reporter: "1diot9",
+        summary: "用友U8cloud 5.1 NCCloudGatewayServlet接口补丁绕过实现SQL注入"
+      },
+      {
+        code: "NCC-2025-00989",
+        score: 7,
+        type: "任意文件上传",
+        reporter: "1diot9",
+        summary: "用友U8cloud5.1 IFileUpload接口存在文件上传漏洞"
+      }
+    ];
+
+    const srcVulnerabilities = [
+      {
+        code: "EduSRC",
+        type: "远程命令执行",
+        severity: "低危",
+        reporter: "lamaper",
+        summary: "北京理工大学某公网redis端口暴露导致RCE"
+      },
+      {
+        code: "EduSRC",
+        type: "敏感信息泄漏",
+        severity: "低危",
+        reporter: "xuwu",
+        summary: "北京理工大学某公网地址泄露APIdoc导致信息泄漏"
+      },
+      {
+        code: "EduSRC",
+        type: "弱口令",
+        severity: "中危",
+        reporter: "dongdigua",
+        summary: "北京理工大学某公网管理员后台弱口令"
+      }
+    ];
+
+    function clampScore(score) {
+      const value = Number(score);
+      if (!Number.isFinite(value)) return 0;
+      return Math.max(0, Math.min(10, value));
+    }
+
+    function scoreTone(score) {
+      const normalized = clampScore(score) / 10;
+      const hue = 218 + normalized * 131;
+      const sat = 38 + normalized * 58;
+      const light = 49 - normalized * 6;
+      const softSat = 32 + normalized * 42;
+      return {
+        tone: `hsl(${hue} ${sat}% ${light}%)`,
+        soft: `hsl(${hue} ${softSat}% 96%)`
+      };
+    }
+
+    function severityToneScore(severity) {
+      return {
+        "低危": 3.2,
+        "中危": 5.8,
+        "高危": 8,
+        "严重": 9.5
+      }[severity] ?? 0;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function renderCard(item) {
+      const rawScore = Number(item.score);
+      const hasScore = Number.isFinite(rawScore);
+      const score = hasScore ? clampScore(rawScore) : severityToneScore(item.severity || item.status);
+      const colors = scoreTone(score);
+      const metricValue = hasScore ? score.toFixed(1) : escapeHtml(item.severity || item.status || "-");
+      const metricLabelMarkup = hasScore ? "<span>CVSS</span>" : "";
+      const metaItems = [
+        item.type ? `<span>${escapeHtml(item.type)}</span>` : "",
+        item.status ? `<span>${escapeHtml(item.status)}</span>` : "",
+        item.reporter ? `<span class="reporter">报告人：${escapeHtml(item.reporter)}</span>` : ""
+      ].join("");
+      return `
+        <article class="vuln-card" style="--tone: ${colors.tone}; --tone-soft: ${colors.soft}; --score: ${score};">
+          <div>
+            <div class="vuln-top">
+              <div class="vuln-id">
+                <h2 class="vuln-code">${escapeHtml(item.code)}</h2>
+              </div>
+              <div class="score">${metricValue}${metricLabelMarkup}</div>
+            </div>
+            <p class="vuln-desc">${escapeHtml(item.summary)}</p>
+          </div>
+          <div class="vuln-meta">${metaItems}</div>
+        </article>
+      `;
+    }
+
+    function renderGroup(gridId, countId, items, emptyText) {
+      const grid = document.getElementById(gridId);
+      const count = document.getElementById(countId);
+      count.textContent = items.length;
+
+      if (!items.length) {
+        grid.innerHTML = `<p class="empty-note">${escapeHtml(emptyText)}</p>`;
+        return;
+      }
+
+      grid.innerHTML = items.map(renderCard).join("");
+    }
+
+    renderGroup("numbered-vuln-grid", "numbered-vuln-count", numberedVulnerabilities, "暂无可公开的编号漏洞记录。");
+    renderGroup("src-vuln-grid", "src-vuln-count", srcVulnerabilities, "暂无可公开的 SRC 漏洞记录。");
+
+    (() => {
+      const canvas = document.getElementById("signal-canvas");
+      const ctx = canvas.getContext("2d");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const colors = ["#2563ff", "#ff315d", "#111827"];
+      const pointer = { x: -9999, y: -9999 };
+      let width = 0;
+      let height = 0;
+      let nodes = [];
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const count = Math.max(36, Math.floor((width * height) / 22000));
+        nodes = Array.from({ length: count }, (_, index) => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.34,
+          vy: (Math.random() - 0.5) * 0.34,
+          size: index % 7 === 0 ? 3.4 : 2.2,
+          color: colors[index % colors.length]
+        }));
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "rgba(251, 252, 255, 0.72)";
+        ctx.fillRect(0, 0, width, height);
+
+        for (let i = 0; i < nodes.length; i += 1) {
+          const a = nodes[i];
+          if (!reduceMotion) {
+            const dx = a.x - pointer.x;
+            const dy = a.y - pointer.y;
+            const distance = Math.hypot(dx, dy);
+            if (distance < 160) {
+              a.vx += dx / 18000;
+              a.vy += dy / 18000;
+            }
+            a.x += a.vx;
+            a.y += a.vy;
+            if (a.x < -20) a.x = width + 20;
+            if (a.x > width + 20) a.x = -20;
+            if (a.y < -20) a.y = height + 20;
+            if (a.y > height + 20) a.y = -20;
+          }
+
+          for (let j = i + 1; j < nodes.length; j += 1) {
+            const b = nodes[j];
+            const d = Math.hypot(a.x - b.x, a.y - b.y);
+            if (d < 132) {
+              ctx.globalAlpha = (1 - d / 132) * 0.45;
+              ctx.strokeStyle = i % 2 === 0 ? "#2563ff" : "#ff315d";
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+
+          ctx.globalAlpha = 0.9;
+          ctx.fillStyle = a.color;
+          ctx.fillRect(a.x - a.size / 2, a.y - a.size / 2, a.size, a.size);
+        }
+
+        ctx.globalAlpha = 1;
+        if (!reduceMotion) requestAnimationFrame(draw);
+      }
+
+      window.addEventListener("resize", resize);
+      window.addEventListener("pointermove", (event) => {
+        pointer.x = event.clientX;
+        pointer.y = event.clientY;
+      });
+      window.addEventListener("pointerleave", () => {
+        pointer.x = -9999;
+        pointer.y = -9999;
+      });
+      resize();
+      draw();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Members of BITs2Sys CTF team." />
+  <title>Members - BITs2Sys</title>
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="favicon32.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <style>
+    :root {
+      --paper: #fbfcff;
+      --ink: #111827;
+      --muted: #64748b;
+      --line: #d9e2f2;
+      --blue: #2563ff;
+      --blue-dark: #1738bd;
+      --blue-soft: #e8efff;
+      --red: #ff315d;
+      --red-dark: #b9183c;
+      --red-soft: #ffe5ec;
+      --white: #ffffff;
+      --shadow: 0 18px 45px rgba(17, 24, 39, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--paper);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        repeating-linear-gradient(90deg, rgba(37, 99, 255, 0.06) 0 1px, transparent 1px 86px),
+        repeating-linear-gradient(0deg, rgba(255, 49, 93, 0.045) 0 1px, transparent 1px 86px),
+        var(--paper);
+    }
+
+    #signal-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 42px 24px 76px;
+    }
+
+    .back-link {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 34px;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 4px 4px 0 var(--ink);
+      color: var(--ink);
+      font-size: 1.25rem;
+      font-weight: 900;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .back-link:hover,
+    .back-link:focus-visible {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--ink);
+      outline: none;
+    }
+
+    .page-title {
+      margin: 0 0 36px;
+      color: var(--ink);
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      line-height: 1;
+      font-weight: 950;
+      text-align: center;
+      text-shadow: 5px 5px 0 rgba(255, 49, 93, 0.12);
+    }
+
+    .cohort {
+      margin-top: 52px;
+    }
+
+    .cohort:first-of-type {
+      margin-top: 0;
+    }
+
+    .cohort-title {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .cohort-title__year {
+      font-size: 1.55rem;
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .member-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(238px, 1fr));
+      gap: 16px;
+    }
+
+    .member {
+      position: relative;
+      min-height: 176px;
+      padding: 20px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .member::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle at top right, var(--blue-soft), transparent 70%);
+      opacity: 0;
+      transition: opacity 180ms ease;
+      pointer-events: none;
+    }
+
+    .member.hot::before {
+      background: radial-gradient(circle at top right, var(--red-soft), transparent 70%);
+    }
+
+    .member:hover {
+      transform: translateY(-3px);
+      border-color: var(--blue);
+    }
+
+    .member.hot:hover {
+      border-color: var(--red);
+    }
+
+    .member:hover::before {
+      opacity: 1;
+    }
+
+    .member__top {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .member__avatar {
+      width: 56px;
+      height: 56px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-soft), var(--red-soft));
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 950;
+      overflow: hidden;
+    }
+
+    .hot .member__avatar {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .member__avatar img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .member__id {
+      min-width: 0;
+    }
+
+    .member__name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 1.1rem;
+      font-weight: 950;
+    }
+
+    .member__years {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .member__role {
+      width: fit-content;
+      max-width: 100%;
+      margin-bottom: 8px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: var(--ink);
+      color: var(--white);
+      font-size: 0.68rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .member__role.red {
+      background: var(--red);
+    }
+
+    .member__skills {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 25px;
+      margin-bottom: 9px;
+    }
+
+    .skill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 5px;
+      background: var(--red-soft);
+      color: var(--red-dark);
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    .skill.primary {
+      background: var(--red-soft);
+      color: var(--red-dark);
+    }
+
+    .member__note {
+      min-height: 18px;
+      color: var(--blue-dark);
+      font-size: 0.82rem;
+      line-height: 1.5;
+      font-weight: 800;
+    }
+
+    .away {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    @media (max-width: 680px) {
+      .page {
+        padding: 32px 18px 56px;
+      }
+
+      .cohort-title {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="signal-canvas" aria-hidden="true"></canvas>
+
+  <main class="page">
+    <a class="back-link" href="index.html" aria-label="Back to home">←</a>
+
+    <h1 class="page-title">Members</h1>
+
+    <section class="cohort" aria-labelledby="cohort-2023">
+      <div class="cohort-title">
+        <h2 class="cohort-title__year" id="cohort-2023">2023</h2>
+      </div>
+      <div class="member-grid">
+        <article class="member hot">
+          <div class="member__top"><div class="member__avatar"><img src="img/zinc_96.jpg" alt="" /></div><div class="member__id"><div class="member__name">zinc_96</div><div class="member__years">2023 - present</div></div></div>
+          <div class="member__role red">Founder · Captain</div>
+          <div class="member__skills"><span class="skill primary">Web</span><span class="skill">SCA</span></div>
+          
+        </article>
+        <article class="member hot">
+          <div class="member__top"><div class="member__avatar"><img src="img/Y4ng.jpg" alt="" /></div><div class="member__id"><div class="member__name">Y4ng</div><div class="member__years">2023 - 2025</div></div></div>
+          <div class="member__role red">Co-Founder</div>
+          <div class="member__skills"><span class="skill primary">PWN</span><span class="skill">CS2</span></div>
+          <div class="member__note"><span class="away">✈️ CN · ISCAS</span></div>
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/GAN_LIN.jpg" alt="" /></div><div class="member__id"><div class="member__name">GAN_LIN</div><div class="member__years">2023 - 2025</div></div></div>
+          <div class="member__skills"><span class="skill primary">Misc</span></div>
+          <div class="member__note"><span class="away">✈️ SG · NTU</span></div>
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/ScorchingSun.jpg" alt="" /></div><div class="member__id"><div class="member__name">ScorchingSun</div><div class="member__years">2023 - 2025</div></div></div>
+          <div class="member__skills"><span class="skill primary">Misc</span><span class="skill">APEX</span></div><div class="member__note"><span class="away">✈️ CN · BIT</span></div>
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/Maicry.png" alt="" /></div><div class="member__id"><div class="member__name">Maicry</div><div class="member__years">2023 - 2025</div></div></div>
+          <div class="member__skills"><span class="skill primary">Crypto</span></div>
+          <div class="member__note"><span class="away">✈️ HK · HKUST</span></div>
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/SHIYE.jpg" alt="" /></div><div class="member__id"><div class="member__name">SHIYE</div><div class="member__years">2023 - 2025</div></div></div>
+          <div class="member__skills"><span class="skill primary">Crypto</span></div>
+          <div class="member__note"><span class="away">✈️ CN · CASIC 2nd</span></div>
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/innovation.jpg" alt="" /></div><div class="member__id"><div class="member__name">innovation</div><div class="member__years">2023 - 2025</div></div></div>
+          <div class="member__skills"><span class="skill primary">Reverse</span></div>
+          <div class="member__note"><span class="away">✈️ CN · BIT</span></div>
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/k1r1t0.jpg" alt="" /></div><div class="member__id"><div class="member__name">k1r1t0</div><div class="member__years">2023 - 2025</div></div></div>
+          <div class="member__skills"><span class="skill primary">Misc</span><span class="skill">MR</span></div>
+          <div class="member__note"><span class="away">✈️ CN · BIT</span></div>
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/hjcccxh.jpg" alt="" /></div><div class="member__id"><div class="member__name">hjcccxh</div><div class="member__years">2023 - 2025</div></div></div>
+          <div class="member__skills"><span class="skill primary">Web</span></div>
+          <div class="member__note"><span class="away">✈️ CN · BIT</span></div>
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/Chrans.jpg" alt="" /></div><div class="member__id"><div class="member__name">Chrans</div><div class="member__years">2023 - 2025</div></div></div>
+          <div class="member__skills"><span class="skill primary">PWN</span></div>
+          <div class="member__note"><span class="away">✈️ CN · QIANXIN & BIT</span></div>
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/Y4n_re.jpg" alt="" /></div><div class="member__id"><div class="member__name">Y4n_re</div><div class="member__years">2023 - 2026</div></div></div>
+          <div class="member__skills"><span class="skill primary">Web</span></div>
+          <div class="member__note"><span class="away">✈️ CN · PKU</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cohort" aria-labelledby="cohort-2024">
+      <div class="cohort-title">
+        <h2 class="cohort-title__year" id="cohort-2024">2024</h2>
+      </div>
+      <div class="member-grid">
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/ckti.png" alt="" /></div><div class="member__id"><div class="member__name">ckti</div><div class="member__years">2024 - 2026</div></div></div><div class="member__skills"><span class="skill primary">Web</span><span class="skill">Drum</span></div><div class="member__note"><span class="away">✈️ CN · ZJU</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/hammer.jpg" alt="" /></div><div class="member__id"><div class="member__name">hammer</div><div class="member__years">2024 - 2026</div></div></div><div class="member__skills"><span class="skill primary">Misc</span><span class="skill">Web</span></div><div class="member__note"><span class="away">✈️ CN · ZJU</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/coldmoon.jpg" alt="" /></div><div class="member__id"><div class="member__name">coldmoon</div><div class="member__years">2024 - 2026</div></div></div><div class="member__skills"><span class="skill primary">Web</span><span class="skill">Star Rail</span></div><div class="member__note"><span class="away">✈️ CN · SJTU</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/l1fe.jpg" alt="" /></div><div class="member__id"><div class="member__name">l1fe</div><div class="member__years">2024 - 2026</div></div></div><div class="member__skills"><span class="skill primary">Reverse</span><span class="skill">Misc</span></div><div class="member__note"><span class="away">✈️ CN · Zhongguancun LAB & BIT</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/Nene.jpg" alt="" /></div><div class="member__id"><div class="member__name">Nene</div><div class="member__years">2024 - 2026</div></div></div><div class="member__skills"><span class="skill primary">Web</span></div><div class="member__note"><span class="away">✈️ CN · Zhongguancun LAB & BIT</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/zuowei.jpg" alt="" /></div><div class="member__id"><div class="member__name">zuowei</div><div class="member__years">2024 - present</div></div></div><div class="member__skills"><span class="skill primary">Crypto</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/By.jpg" alt="" /></div><div class="member__id"><div class="member__name">By</div><div class="member__years">2024 - 2026</div></div></div><div class="member__skills"><span class="skill primary">Crypto</span><span class="skill">Misc</span></div><div class="member__note"><span class="away">✈️ CN · USTU</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/xration.jpg" alt="" /></div><div class="member__id"><div class="member__name">xration</div><div class="member__years">2024 - present</div></div></div><div class="member__skills"><span class="skill primary">Crypto</span><span class="skill">Misc</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/Lucien.jpg" alt="" /></div><div class="member__id"><div class="member__name">Lucien</div><div class="member__years">2024 - 2026</div></div></div><div class="member__skills"><span class="skill primary">PWN</span><span class="skill">Misc</span></div><div class="member__note"><span class="away">✈️ CN · BIT</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/Nazrinduck.jpg" alt="" /></div><div class="member__id"><div class="member__name">Nazrinduck</div><div class="member__years">2024 - present</div></div></div><div class="member__skills"><span class="skill primary">PWN</span><span class="skill primary">STG</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/1diOt9.jpg" alt="" /></div><div class="member__id"><div class="member__name">1diOt9</div><div class="member__years">2024 - present</div></div></div><div class="member__skills"><span class="skill primary">Web</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/Charlie.jpg" alt="" /></div><div class="member__id"><div class="member__name">Charlie</div><div class="member__years">2024 - present</div></div></div><div class="member__skills"><span class="skill primary">PPC</span><span class="skill">Web</span><span class="skill">Neko</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/Anyakwi.png" alt="" /></div><div class="member__id"><div class="member__name">Anyakwi</div><div class="member__years">2024 - present</div></div></div><div class="member__skills"><span class="skill primary">Web</span></div></article>
+        <article class="member"><div class="member__top"><div class="member__avatar"><img src="img/chang3m4n.jpg" alt="" /></div><div class="member__id"><div class="member__name">chang3m4n</div><div class="member__years">2024 - present</div></div></div><div class="member__skills"><span class="skill primary">Web</span></div></article>
+      </div>
+    </section>
+
+    <section class="cohort" aria-labelledby="cohort-2025">
+      <div class="cohort-title">
+        <h2 class="cohort-title__year" id="cohort-2025">2025</h2>
+      </div>
+      <div class="member-grid">
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/sager.jpg" alt="" /></div><div class="member__id"><div class="member__name">sager</div><div class="member__years">2025 - present</div></div></div>
+          <div class="member__skills"><span class="skill primary">Crypto</span></div>
+          <div class="member__note">.... .... .... .- .... .- ....</div>
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/lamaper.jpg" alt="" /></div><div class="member__id"><div class="member__name">lamaper</div><div class="member__years">2025 - present</div></div></div>
+          <div class="member__skills"><span class="skill primary">Web</span></div>
+          
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/iElloc.jpg" alt="" /></div><div class="member__id"><div class="member__name">iElloc</div><div class="member__years">2025 - present</div></div></div>
+          <div class="member__skills"><span class="skill primary">Web</span></div>
+          
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/Levi2005.jpg" alt="" /></div><div class="member__id"><div class="member__name">Levi2005</div><div class="member__years">2025 - present</div></div></div>
+          <div class="member__skills"><span class="skill primary">PWN</span><span class="skill primary">Reverse</span><span class="skill primary">APEX</span></div>
+          
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/xuwu.png" alt="" /></div><div class="member__id"><div class="member__name">xuwu</div><div class="member__years">2025 - present</div></div></div>
+          <div class="member__skills"><span class="skill primary">Misc</span></div>
+          
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/dongdigua.jpg" alt="" /></div><div class="member__id"><div class="member__name">dongdigua</div><div class="member__years">2025 - present</div></div></div>
+          <div class="member__skills"><span class="skill primary">PWN</span><span class="skill primary">MC</span></div>
+          
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/light.jpg" alt="" /></div><div class="member__id"><div class="member__name">light</div><div class="member__years">2025 - present</div></div></div>
+          <div class="member__skills"><span class="skill primary">Web</span></div>
+          
+        </article>
+        <article class="member">
+          <div class="member__top"><div class="member__avatar"><img src="img/zero.jpg" alt="" /></div><div class="member__id"><div class="member__name">zero</div><div class="member__years">2025 - present</div></div></div>
+          <div class="member__skills"><span class="skill primary">Web</span></div>
+          
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById("signal-canvas");
+      const ctx = canvas.getContext("2d");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const colors = ["#2563ff", "#ff315d", "#111827"];
+      const pointer = { x: -9999, y: -9999 };
+      let width = 0;
+      let height = 0;
+      let nodes = [];
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const count = Math.max(36, Math.floor((width * height) / 22000));
+        nodes = Array.from({ length: count }, (_, index) => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.34,
+          vy: (Math.random() - 0.5) * 0.34,
+          size: index % 7 === 0 ? 3.4 : 2.2,
+          color: colors[index % colors.length]
+        }));
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "rgba(251, 252, 255, 0.72)";
+        ctx.fillRect(0, 0, width, height);
+
+        for (let i = 0; i < nodes.length; i += 1) {
+          const a = nodes[i];
+          if (!reduceMotion) {
+            const dx = a.x - pointer.x;
+            const dy = a.y - pointer.y;
+            const distance = Math.hypot(dx, dy);
+            if (distance < 160) {
+              a.vx += dx / 18000;
+              a.vy += dy / 18000;
+            }
+            a.x += a.vx;
+            a.y += a.vy;
+            if (a.x < -20) a.x = width + 20;
+            if (a.x > width + 20) a.x = -20;
+            if (a.y < -20) a.y = height + 20;
+            if (a.y > height + 20) a.y = -20;
+          }
+
+          for (let j = i + 1; j < nodes.length; j += 1) {
+            const b = nodes[j];
+            const d = Math.hypot(a.x - b.x, a.y - b.y);
+            if (d < 132) {
+              ctx.globalAlpha = (1 - d / 132) * 0.45;
+              ctx.strokeStyle = i % 2 === 0 ? "#2563ff" : "#ff315d";
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+
+          ctx.globalAlpha = 0.9;
+          ctx.fillStyle = a.color;
+          ctx.fillRect(a.x - a.size / 2, a.y - a.size / 2, a.size, a.size);
+        }
+
+        ctx.globalAlpha = 1;
+        if (!reduceMotion) requestAnimationFrame(draw);
+      }
+
+      window.addEventListener("resize", resize);
+      window.addEventListener("pointermove", (event) => {
+        pointer.x = event.clientX;
+        pointer.y = event.clientY;
+      });
+      window.addEventListener("pointerleave", () => {
+        pointer.x = -9999;
+        pointer.y = -9999;
+      });
+      resize();
+      draw();
+    })();
+  </script>
+</body>
+</html>
