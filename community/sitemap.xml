@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://bitctf.cn/community/archives/bits2sys-2026-zhao-xin-ji-hua/</loc>
+
+    <lastmod>2026-03-11</lastmod>
+
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/</loc>
+
+    <lastmod>2025-02-02</lastmod>
+
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://bitctf.cn/community/archives/di-qi-jie-qiang-wang-ni-tai-fang-yu-guo-ji-jing-ying-tiao-zhan-sai-jue-sai-wp/</loc>
+
+    <lastmod>2025-02-02</lastmod>
+
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+
+  <url>
+    <loc>https://bitctf.cn/community</loc>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+
+  <url>
+    <loc>https://bitctf.cn/community/tags/iscc/</loc>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+
+  <url>
+    <loc>https://bitctf.cn/community/tags/recruitment/</loc>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+
+
+
+  <url>
+    <loc>https://bitctf.cn/community/categories/wp/</loc>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+
+  <url>
+    <loc>https://bitctf.cn/community/categories/announcement/</loc>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+
+</urlset>

@@ -1,0 +1,146 @@
+:root,
+html[data-color-scheme="dark"] {
+  --bits-bg: #212326;
+  --bits-surface: #1c1c1c;
+  --bits-border: #5f6368;
+  --bits-text: #d5d7d8;
+  --bits-muted: #9ba0a5;
+  --bits-primary: #66ccff;
+  --bits-accent: #c5b6ff;
+  color-scheme: dark;
+}
+
+html[data-color-scheme="light"] {
+  --bits-bg: #f7f7f7;
+  --bits-surface: #eeeeee;
+  --bits-border: #b8bcc2;
+  --bits-text: #212326;
+  --bits-muted: #656a70;
+  --bits-primary: #146c94;
+  --bits-accent: #7357c7;
+  color-scheme: light;
+}
+
+html {
+  border-top-color: var(--bits-text) !important;
+}
+
+body,
+#footer-post,
+#footer-post a,
+#footer-post #nav-footer a {
+  background-color: var(--bits-bg) !important;
+  color: var(--bits-text) !important;
+}
+
+body,
+.content,
+.content a,
+#header h1,
+#header .h1,
+#header a,
+#footer,
+#footer a {
+  color: var(--bits-text) !important;
+}
+
+#header {
+  position: relative;
+}
+
+#header #nav,
+#header #nav a,
+#header h1:hover,
+.content a.icon:hover,
+article .content .article-tag,
+article .content .article-category {
+  color: var(--bits-primary) !important;
+}
+
+#header #nav li {
+  border-color: var(--bits-primary) !important;
+}
+
+.content a:hover,
+.content h1 a:hover,
+.content .h1 a:hover,
+.content h2 a:hover,
+.content h3 a:hover,
+#header #nav a:hover {
+  background-image: linear-gradient(
+    transparent,
+    transparent 4px,
+    var(--bits-accent) 4px,
+    var(--bits-accent)
+  ) !important;
+}
+
+.post-list .post-item .meta,
+.article .article-entry .article-date,
+.article .article-entry .article-category,
+.article .article-entry .article-tag,
+#footer,
+#footer a,
+.archive .post-item .meta {
+  color: var(--bits-muted) !important;
+}
+
+pre,
+code,
+.highlight,
+figure.highlight {
+  border-color: var(--bits-border) !important;
+  background-color: var(--bits-surface) !important;
+}
+
+article img,
+.article-entry img {
+  max-width: 100%;
+  height: auto !important;
+  border-radius: 4px;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--bits-primary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 2rem;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--bits-accent);
+  outline-offset: 3px;
+}
+
+.theme-toggle--post {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body,
+  #footer-post {
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .theme-toggle {
+    right: 3.2rem;
+  }
+
+  .theme-toggle--post {
+    right: 1rem;
+  }
+}

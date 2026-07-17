@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><!-- hexo injector head_begin start --><script>(function(){try{var m=localStorage.getItem("bits2sys-theme")||"auto";var d=m==="auto"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):m;document.documentElement.dataset.colorScheme=d;document.documentElement.dataset.themePreference=m}catch(e){}})();</script><!-- hexo injector head_begin end -->
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Misc02 附件给了三个压缩包和两个txt，其中皮箱压缩包有密码，先看皮箱封条.txt 给的是一串数列，观察后得到通项公式：但是求出来的结果无法解压缩，通过字典爆破后发现实际压缩包密码为5a2dd7b80，即220033个大衍数，解压后得到五张图片 继续看">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ISCC 2024 博弈对抗赛 WP">
+<meta property="og:url" content="https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/">
+<meta property="og:site_name" content="BIT CTF Community">
+<meta property="og:description" content="Misc02 附件给了三个压缩包和两个txt，其中皮箱压缩包有密码，先看皮箱封条.txt 给的是一串数列，观察后得到通项公式：但是求出来的结果无法解压缩，通过字典爆破后发现实际压缩包密码为5a2dd7b80，即220033个大衍数，解压后得到五张图片 继续看">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://bitctf.cn/upload/image.png">
+<meta property="og:image" content="https://bitctf.cn/upload/image-xtzi.png">
+<meta property="og:image" content="https://bitctf.cn/upload/image-qvsn.png">
+<meta property="og:image" content="https://bitctf.cn/upload/image-rxih.png">
+<meta property="og:image" content="https://bitctf.cn/upload/image-qjvh.png">
+<meta property="og:image" content="https://bitctf.cn/upload/image-wsxg.png">
+<meta property="og:image" content="https://bitctf.cn/upload/image-jgme.png">
+<meta property="og:image" content="https://bitctf.cn/upload/image-fxwx.png">
+<meta property="og:image" content="https://bitctf.cn/upload/image-clql.png">
+<meta property="og:image" content="https://bitctf.cn/upload/image-uexu.png">
+<meta property="article:published_time" content="2025-02-02T13:40:30.000Z">
+<meta property="article:modified_time" content="2025-02-02T13:43:21.000Z">
+<meta property="article:author" content="BITs2Sys">
+<meta property="article:tag" content="ISCC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bitctf.cn/upload/image.png">
+
+
+
+
+          <link rel="shortcut icon" href="/community/upload/BITs2Sys.png">
+
+
+
+
+          <link rel="icon" type="image/png" href="/community/upload/BITs2Sys.png" sizes="192x192">
+
+
+
+
+          <link rel="apple-touch-icon" sizes="180x180" href="/community/upload/BITs2Sys.png">
+
+
+
+    <!-- title -->
+    <title>ISCC 2024 博弈对抗赛 WP</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+
+<link rel="stylesheet" href="/community/css/style.css">
+
+    <!-- persian styles -->
+
+    <!-- rss -->
+
+
+      <link rel="alternate" href="/community/atom.xml" title="BIT CTF Community" type="application/atom+xml" />
+
+	<!-- mathjax -->
+
+<!-- hexo injector head_end start --><link rel="stylesheet" href="/community/css/bitctf.css"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/community/">首页</a></li><!--
+     --><!--
+       --><li><a href="/community/categories/announcement/">Announcement</a></li><!--
+     --><!--
+       --><li><a href="/community/categories/wp/">WP</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+
+
+        <li><a class="icon" aria-label="下一篇" href="/community/archives/di-qi-jie-qiang-wang-ni-tai-fang-yu-guo-ji-jing-ying-tiao-zhan-sai-jue-sai-wp/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&text=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&title=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&is_video=false&description=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ISCC 2024 博弈对抗赛 WP&body=Check out this article: https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&title=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&title=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&title=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&title=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&name=ISCC 2024 博弈对抗赛 WP&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&t=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#misc02"><span class="toc-number">1.</span> <span class="toc-text">Misc02</span></a></li></ol>
+      </div>
+
+  </span>
+</div>
+
+
+    <div class="content index py4 ">
+
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+
+    <h1 class="posttitle p-name" itemprop="name headline">
+        ISCC 2024 博弈对抗赛 WP
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">BITs2Sys</span>
+      </span>
+
+    <div class="postdate">
+
+        <time datetime="2025-02-02T13:40:30.000Z" class="dt-published" itemprop="datePublished">2025-02-02</time>
+
+        (Updated: <time datetime="2025-02-02T13:43:21.000Z" class="dt-updated" itemprop="dateModified">2025-02-02</time>)
+
+
+    </div>
+
+
+
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/community/categories/wp/">WP</a>
+    </div>
+
+
+
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/community/tags/iscc/" rel="tag">ISCC</a>
+    </div>
+
+
+    </div>
+  </header>
+
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 style="" id="misc02">Misc02</h2><p style="">附件给了三个压缩包和两个txt，其中皮箱压缩包有密码，先看皮箱封条.txt</p><p style=""><img src="/community/upload/image.png" width="100%" height="100%" style="display: inline-block"></p><p style="">给的是一串数列，观察后得到通项公式：<img src="/community/upload/image-xtzi.png" width="100%" height="100%" style="display: inline-block">但是求出来的结果无法解压缩，通过字典爆破后发现实际压缩包密码为5a2dd7b80，即220033个大衍数，解压后得到五张图片</p><p style=""><img src="/community/upload/image-qvsn.png" width="100%" height="100%" style="display: inline-block"></p><p style="">继续看另外一个txt，需要求一个六位数</p><p style=""><img src="/community/upload/image-rxih.png" width="100%" height="100%" style="display: inline-block"></p><p style="">代码如下：</p><pre><code class="language-python">for i in range(100000,1000000):
+&nbsp;&nbsp;&nbsp; s=str(i)
+&nbsp;&nbsp;&nbsp; if(len(set(s))!=len(s)):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue
+&nbsp;&nbsp;&nbsp; s2 = str(i * i)
+&nbsp;&nbsp;&nbsp; k=0
+&nbsp;&nbsp;&nbsp; for j in range(0,len(s2)):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if s2[j] in s:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; k=1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break
+&nbsp;&nbsp;&nbsp; if(k==0):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print(i)
+# 203879
+# 639172</code></pre><p style="">二者相乘后得到压缩包密码1e574dfedc，解压后得到四个文件夹</p><p style="">坎：有一个加急密信.word，放010后发现是png文件，修改后缀得到图片</p><p style=""><img src="/community/upload/image-qjvh.png" width="100%" height="100%" style="display: inline-block"></p><p style="">坤：一个wav文件，audacity打开查看频谱图得到一个二维码碎片</p><p style=""><img src="/community/upload/image-wsxg.png" width="100%" height="100%" style="display: inline-block"></p><p style="">离：一张拉伸过的图片，crc计算后得到原始图片</p><p style=""><img src="/community/upload/image-jgme.png" width="100%" height="100%" style="display: inline-block"></p><p style="">乾：一张food.png，用stegsolve查看得到一个二维码碎片</p><p style=""><img src="/community/upload/image-fxwx.png" width="100%" height="100%" style="display: inline-block"></p><p style="">fuxi.7z的密码之后由主办方给出为iscc1234，解压缩后得到一张伏羲八卦的图片猜测与图片以及文件夹的名字相对应。观察发现二维码的大小为33*33，且由特征点确定大致位置：</p><p style=""><img src="/community/upload/image-clql.png" width="100%" height="100%" style="display: inline-block"></p><p style="">其中坤需要进行右旋90°，兑需要旋转180°，结合伏羲八卦图，正中间为太极，离与坎相对，即右2是坎，乾与坤相对，即中3是乾。（这里比较奇怪的地方在于二维码碎片并未按照八卦的顺序排列）</p><p style="">最后拼接得到所求的二维码：</p><p style=""><img src="/community/upload/image-uexu.png" width="100%" height="100%" style="display: inline-block"></p><p style="">识别后得到flag，为ISCC{wisH_U_ki7mo5_all_tHe_bEst}</p><p style=""></p>
+
+  </div>
+</article>
+
+
+
+
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+
+          <li><a href="/community/">首页</a></li>
+
+          <li><a href="/community/categories/announcement/">Announcement</a></li>
+
+          <li><a href="/community/categories/wp/">WP</a></li>
+
+      </ul>
+    </div>
+
+
+
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#misc02"><span class="toc-number">1.</span> <span class="toc-text">Misc02</span></a></li></ol>
+      </div>
+
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&text=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&title=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&is_video=false&description=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ISCC 2024 博弈对抗赛 WP&body=Check out this article: https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&title=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&title=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&title=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&title=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&name=ISCC 2024 博弈对抗赛 WP&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://bitctf.cn/community/archives/iscc-2024-bo-yi-dui-kang-sai-wp/&t=ISCC 2024 博弈对抗赛 WP"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+
+
+    2025-2026
+    BITs2Sys
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/community/">首页</a></li><!--
+     --><!--
+       --><li><a href="/community/categories/announcement/">Announcement</a></li><!--
+     --><!--
+       --><li><a href="/community/categories/wp/">WP</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link
+    rel="preload"
+    href="/community/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/community/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+
+<script src="/community/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+
+
+<script src="/community/lib/clipboard/clipboard.min.js"></script>
+
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/community/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+<!-- hexo injector body_end start --><script src="/community/js/theme-toggle.js" defer></script><!-- hexo injector body_end end --></body>
+</html>
